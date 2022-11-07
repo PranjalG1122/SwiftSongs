@@ -5,7 +5,7 @@ import { StyledButton } from "../components/smallcomponents";
 export default function Page404() {
   return (
     <Container top="flex-1">
-      <StyledButton>jo</StyledButton>
+      <StyledButton>404</StyledButton>
     </Container>
   );
 }

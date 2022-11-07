@@ -1,46 +1,49 @@
 import React from "react";
 
 export default function Navbar() {
+  const body = document.body;
+  if (localStorage.getItem("theme") === "dark") {
+    body.classList.add("dark");
+  } else if (localStorage.getItem("theme") === "blue") {
+    body.classList.add("blue");
+  } else if (localStorage.getItem("theme") === "gray") {
+    body.classList.add("gray");
+  }
+  function toggleLight() {
+    body.classList.remove("highcontrast");
+    body.classList.remove("darkblue");
+    body.classList.remove("darkgray");
+    localStorage.setItem("theme", "light");
+  }
+  function toggleHighContrast() {
+    body.classList.remove("darkblue");
+    body.classList.remove("darkgray");
+    body.classList.add("highcontrast");
+    localStorage.setItem("theme", "highcontrast");
+  }
+  function toggleDarkBlue() {
+    body.classList.remove("highcontrast");
+    body.classList.remove("darkgray");
+    body.classList.add("darkblue");
+    localStorage.setItem("theme", "darkblue");
+  }
+  function toggleDarkGray() {
+    body.classList.remove("highcontrast");
+    body.classList.remove("darkblue");
+    body.classList.add("darkgray");
+    localStorage.setItem("theme", "darkgray");
+  }
+
   return (
-    <div>
-      <nav
-        className="flex justify-between items-center h-16 bg-white text-black fixed min-h-[75px] top-0 right-0 left-0 shadow-sm font-mono"
-        role="navigation"
-      >
-        <a href="/" className="pl-8">
-          Logo
-        </a>
-        <div className="px-4 cursor-pointer md:hidden">
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M4 6h16M4 12h16M4 18h16"
-            ></path>
-          </svg>
-        </div>
-        <div className="pr-8 md:block hidden">
-          <a href="/" className="p-4">
-            Home
-          </a>
-          <a href="/about" className="p-4">
-            About
-          </a>
-          <a href="/contact" className="p-4">
-            Contact
-          </a>
-          <a href="/signin" className="p-4">
-            Sign In
-          </a>
-        </div>
+    <>
+      <nav className="flex justify-between items-center h-16 backdrop-blur fixed top-0 right-0 left-0 ">
+        <button onClick={toggleLight}>Light</button>
+        <button onClick={toggleHighContrast} className="mr-10">
+          High Contrast
+        </button>
+        <button onClick={toggleDarkBlue}>Dark Blue</button>
+        <button onClick={toggleDarkGray}>Dark Gray</button>
       </nav>
-    </div>
+    </>
   );
 }
