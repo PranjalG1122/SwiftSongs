@@ -1,13 +1,21 @@
 import React from "react";
+import { Home, Menu, X } from "react-feather";
 
 export default function Navbar() {
+  const [themeMenu, setThemeMenu] = React.useState(false);
+  function clickedThemeMenu() {
+    setThemeMenu(!themeMenu);
+  }
+
   const body = document.body;
-  if (localStorage.getItem("theme") === "dark") {
-    body.classList.add("dark");
-  } else if (localStorage.getItem("theme") === "blue") {
-    body.classList.add("blue");
-  } else if (localStorage.getItem("theme") === "gray") {
-    body.classList.add("gray");
+  if (localStorage.getItem("theme") === null) {
+    localStorage.setItem("theme", "light");
+  } else if (localStorage.getItem("theme") === "highcontrast") {
+    body.classList.add("highcontrast");
+  } else if (localStorage.getItem("theme") === "darkblue") {
+    body.classList.add("darkblue");
+  } else if (localStorage.getItem("theme") === "darkgray") {
+    body.classList.add("darkgray");
   }
   function toggleLight() {
     body.classList.remove("highcontrast");
@@ -36,13 +44,36 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="flex justify-between items-center h-16 backdrop-blur fixed top-0 right-0 left-0 ">
-        <button onClick={toggleLight}>Light</button>
-        <button onClick={toggleHighContrast} className="mr-10">
-          High Contrast
-        </button>
-        <button onClick={toggleDarkBlue}>Dark Blue</button>
-        <button onClick={toggleDarkGray}>Dark Gray</button>
+      <nav className="flex justify-between items-center h-16 backdrop-blur fixed top-0 right-0 left-0 px-10 ">
+        <a
+          href="/"
+          className="px-4 py-2 rounded transition-all hover:scale-125 "
+        >
+          <Home />
+        </a>
+        <div>
+          <a href="/#" className="mx-2 transition-all px-4 py-2">
+            Text1
+          </a>
+          <a href="/#" className="mx-2 transition-all px-4 py-2">
+            Text1
+          </a>
+          <a href="/#" className="mx-2 transition-all px-4 py-2">
+            Text1
+          </a>
+        </div>
+        <button onClick={clickedThemeMenu}>Theme</button>
+        <div
+          className={
+            `flex flex-col items-end fixed top-14 transition-all mr-10 border-2 p-2 rounded ` +
+            (themeMenu ? "right-[-100%]" : "right-[0%]")
+          }
+        >
+          <button onClick={toggleLight}>Light</button>
+          <button onClick={toggleHighContrast}>High Contrast</button>
+          <button onClick={toggleDarkBlue}>Dark Blue</button>
+          <button onClick={toggleDarkGray}>Dark Gray</button>
+        </div>
       </nav>
     </>
   );
