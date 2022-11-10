@@ -3,7 +3,9 @@ import Container from "../components/Container";
 import { songdata } from "../components/songdata";
 
 export default function Home() {
+  // Getting last song listented to by User
   let getUserMusic = JSON.parse(localStorage.getItem("song"));
+  // Setting up Looping usestate
   const [isLooping, setIsLooping] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);
   const [duration, setDuration] = useState(0);
