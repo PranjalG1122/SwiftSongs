@@ -1,11 +1,12 @@
 import React from "react";
 import Container from "../components/Container";
-import { StyledButton } from "../components/smallcomponents";
 
 export default function Page404() {
   return (
     <Container top="flex-1">
-      <StyledButton>404</StyledButton>
+      <div className="flex flex-col justify-center items-cen">
+        <p>404</p>
+      </div>
     </Container>
   );
 }
