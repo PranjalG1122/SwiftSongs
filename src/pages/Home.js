@@ -10,6 +10,18 @@ import {
   Shuffle,
 } from "react-feather";
 
+// Goals:
+// - Style the player
+// - Add viewable playlist
+// - Add animations
+// - Add way more songs
+// - Link background color to color of image
+// - Music API?
+
+// Bugs:
+// - When you click next song, it skips ahead by 2 songs instead of 1
+// - Will it work on deployment?
+
 export default function Home() {
   // Getting last song listented to by User
   let getUserMusic = JSON.parse(localStorage.getItem("song"));
@@ -49,18 +61,22 @@ export default function Home() {
     }
   };
   const prevSong = () => {
-    setCurrentlyPlaying(
-      currentlyPlaying === 0 ? songdata.length - 1 : currentlyPlaying - 1
-    );
-    localStorage.setItem(
-      "song",
-      currentlyPlaying === 0 ? songdata.length - 1 : currentlyPlaying - 1
-    );
+    if (currentTime <= duration * 0.1) {
+      setCurrentlyPlaying(
+        currentlyPlaying === 0 ? songdata.length - 1 : currentlyPlaying - 1
+      );
+      localStorage.setItem(
+        "song",
+        currentlyPlaying === 0 ? songdata.length - 1 : currentlyPlaying - 1
+      );
+    } else {
+      music.currentTime = 0;
+    }
   };
   useEffect(() => setMounted(true), []);
   return (
     <Container top="flex-1">
-      <div className="flex flex-col items-center mx-auto">
+      <div className="flex flex-col items-center text-xl justify-center font-semibold font-sans w-[350px] mx-auto h-[400px] border-4 rounded-xl">
         <audio
           src={songdata[currentlyPlaying].source}
           id="audio"
@@ -86,13 +102,15 @@ export default function Home() {
           }}
         ></audio>
         {mounted && (
-          <div className="border-4 flex flex-col items-center min-w-[300px]">
-            <p>
-              Playing {parseInt(songdata[currentlyPlaying].id) + 1} of{" "}
-              {songdata.length}
-            </p>
-            <p>{songdata[currentlyPlaying].name} </p>
-            <div className="flex flex-row items-center justify-center w-full">
+          <div className="flex flex-col items-center min-w-[300px]">
+            <div className="flex flex-col items-center">
+              <p>
+                Playing {parseInt(songdata[currentlyPlaying].id) + 1} of{" "}
+                {songdata.length}
+              </p>
+              <p>{songdata[currentlyPlaying].name} </p>
+            </div>
+            <div className="flex flex-row items-center justify-center w-full my-2">
               <input
                 type="range"
                 min={0}
@@ -105,11 +123,27 @@ export default function Home() {
               />
               <span id="full-time"></span>
             </div>
-            <div className="flex flex-row justify-between min-w-[200px] mt-1">
-              <span id="current-time" className="px-2">
-                {Math.floor(currentTime / 60) || "-"}
+            <div className="flex flex-row justify-between min-w-[200px] mb-4">
+              <span id="current-time" className="">
+                {/* Minutes for currentTime */}
+                {(currentTime / 100 / 60 < 1
+                  ? "00"
+                  : `0${Math.floor(currentTime / 6000)}`) || "00"}{" "}
+                : {/* Seconds for currentTime */}
+                {((currentTime / 100) % 60 < 10
+                  ? `0${Math.floor(currentTime / 100) % 60}`
+                  : Math.floor(currentTime / 100) % 60) || "00"}
               </span>
-              <p>{Math.floor(duration / 60) || "-"}</p>
+              <p>
+                {/* Minutes for duration */}
+                {(duration / 100 / 60 < 1
+                  ? "00"
+                  : `0${Math.floor(duration / 6000)}`) || "00"}{" "}
+                : {/* Seconds for duration */}
+                {((duration / 100) % 60 < 10
+                  ? `0${Math.floor(duration / 100) % 60}`
+                  : Math.floor(duration / 100) % 60) || "00"}
+              </p>
             </div>
             <div className="flex flex-row items-center justify-center w-full">
               <button
