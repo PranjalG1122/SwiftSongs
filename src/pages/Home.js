@@ -17,10 +17,10 @@ import {
 // - Add way more songs
 // - Link background color to color of image
 // - Music API?
+// - Add Mobile Support
 
-// Bugs:
-// - When you click next song, it skips ahead by 2 songs instead of 1
-// - Will it work on deployment?
+// Issues
+// - Deployment brokey
 
 export default function Home() {
   // Getting last song listented to by User
