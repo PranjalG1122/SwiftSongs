@@ -23,6 +23,9 @@ import {
 // - Deployment brokey
 
 export default function Home() {
+  if (!localStorage.getItem("song")) {
+    localStorage.setItem("song", 0);
+  }
   // Getting last song listented to by User
   let getUserMusic = JSON.parse(localStorage.getItem("song"));
   // Setting up Looping usestate
