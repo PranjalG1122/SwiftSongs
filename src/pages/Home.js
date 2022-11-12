@@ -76,7 +76,9 @@ export default function Home() {
       music.currentTime = 0;
     }
   };
-  useEffect(() => setMounted(true), []);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
   return (
     <Container top="flex-1">
       <div className="flex flex-col items-center text-xl justify-center font-semibold font-sans w-[350px] mx-auto h-[400px] border-4 rounded-xl">
@@ -87,13 +89,12 @@ export default function Home() {
             if (isLooping) {
               music.currentTime = 0;
               music.play();
+            } else {
+              nextSong();
             }
           }}
           onTimeUpdate={() => {
             setCurrentTime(Math.floor(music.currentTime * 100));
-            if (currentTime >= duration - 200 && !isLooping) {
-              nextSong();
-            }
           }}
           onLoadedData={() => {
             setDuration(Math.floor(music.duration * 100));
