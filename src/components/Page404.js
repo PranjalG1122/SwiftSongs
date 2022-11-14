@@ -1,12 +1,15 @@
 import React from "react";
-import Container from "../components/Container";
+import { Helmet } from "react-helmet";
 
 export default function Page404() {
   return (
-    <Container top="flex-1">
+    <div>
+      <Helmet>
+        <title>404</title>
+      </Helmet>
       <div className="flex flex-col justify-center items-cen">
         <p>404</p>
       </div>
-    </Container>
+    </div>
   );
 }
