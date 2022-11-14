@@ -10,7 +10,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
-  background-color: #fff;
+  @apply bg-slate-900 text-slate-200;
   /* transition: all 250ms; */
 }
 
