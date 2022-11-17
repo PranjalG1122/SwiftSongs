@@ -68,194 +68,209 @@ export default function Home() {
 
   useEffect(() => setMounted(true), []);
 
+  const playlistData = songdata.map((song, index) => {
+    return (
+      <div
+        className="flex flex-row items-center justify-between p-4"
+        key={index}
+      >
+        <div className="flex flex-row items-center space-x-2">
+          <div className="flex flex-row text-lg tablet:text-2xl">
+            <p className="mr-2">
+              {parseInt(song.id) + 1}
+              {"."}
+            </p>
+            <p>{song.name}</p>
+          </div>
+        </div>
+        <div className="flex flex-row items-center space-x-2">
+          <button
+            onClick={() => {
+              setCurrentlyPlaying(index);
+              setPlaying(true);
+              music.play();
+            }}
+          >
+            <Play />
+          </button>
+        </div>
+      </div>
+    );
+  });
+
   return (
-    <div className="flex flex-col justify-start items-start w-screen">
-      <Helmet>
-        <title>SwiftSongs</title>
-      </Helmet>
-      <div className="flex flex-row w-screen h-screen">
-        <div className="m-auto flex flex-col justify-center items-center">
-          <audio
-            src={songdata[currentlyPlaying].source}
-            id="audio"
-            muted={muted}
-            onEnded={() => {
-              if (isLooping) {
-                music.currentTime = 0;
-                music.play();
-              } else {
-                nextSong();
-              }
-            }}
-            onTimeUpdate={() => {
-              setCurrentTime(Math.floor(music.currentTime * 100));
-            }}
-            onLoadedData={() => {
-              setDuration(Math.floor(music.duration * 100));
-              if (!isPlaying) {
-                music.pause();
-              } else {
-                music.play();
-              }
-            }}
-            onVolumeChange={() => {
-              if (muted) {
-                setVolume(0);
-              } else {
-                setVolume(music.volume);
-              }
-            }}
-            onPlay={() => {
-              music.volume = volume;
-            }}
-          />
+    <>
+      <div className="flex flex-col items-center">
+        <Helmet>
+          <title>SwiftSongs</title>
+        </Helmet>
+        <div className="flex flex-col min-h-screen">
+          <div className="m-auto flex flex-col justify-center items-center">
+            <audio
+              src={songdata[currentlyPlaying].source}
+              id="audio"
+              muted={muted}
+              onEnded={() => {
+                if (isLooping) {
+                  music.currentTime = 0;
+                  music.play();
+                } else {
+                  nextSong();
+                }
+              }}
+              onTimeUpdate={() => {
+                setCurrentTime(Math.floor(music.currentTime * 100));
+              }}
+              onLoadedData={() => {
+                setDuration(Math.floor(music.duration * 100));
+                if (!isPlaying) {
+                  music.pause();
+                } else {
+                  music.play();
+                }
+              }}
+              onVolumeChange={() => {
+                if (muted) {
+                  setVolume(0);
+                } else {
+                  setVolume(music.volume);
+                }
+              }}
+              onPlay={() => {
+                music.volume = volume;
+              }}
+            />
 
-          {(isMounted && (
-            <div className="flex w-full flex-col items-center space-y-4 rounded-md tablet:min-w-[400px] p-8 ">
-              <div className="flex flex-col items-center justify-around">
-                <p className="">
-                  Playing {parseInt(songdata[currentlyPlaying].id) + 1} of{" "}
-                  {songdata.length}
-                </p>
+            {(isMounted && (
+              <div className="flex w-full flex-col items-center space-y-4 rounded-md p-8 ">
+                <div className="flex flex-col items-center justify-around">
+                  <p className="">
+                    Playing {parseInt(songdata[currentlyPlaying].id) + 1} of{" "}
+                    {songdata.length}
+                  </p>
 
-                <p className="lex justify-center">
-                  {songdata[currentlyPlaying].name}
-                </p>
-              </div>
+                  <p className="lex justify-center">
+                    {songdata[currentlyPlaying].name}
+                  </p>
+                </div>
 
-              <div className="flex flex-col justify-center w-full">
-                <input
-                  type="range"
-                  min={0}
-                  max={duration}
-                  value={currentTime}
-                  className="range-lg h-4 w-full cursor-pointer appearance-none rounded-xl bg-gray-700"
-                  onChange={(e) => {
-                    music.currentTime = e.target.value / 100;
-                  }}
-                />
+                <div className="flex flex-col justify-center w-full">
+                  <input
+                    type="range"
+                    min={0}
+                    max={duration}
+                    value={currentTime}
+                    className="range-lg h-4 w-full cursor-pointer appearance-none rounded-xl bg-gray-700"
+                    onChange={(e) => {
+                      music.currentTime = e.target.value / 100;
+                    }}
+                  />
 
-                <div className="flex flex-row items-center justify-between mt-2 text-xl">
-                  <span id="current-time" className="whitespace-nowrap">
-                    {/* Current Time Minutes */}
-                    {currentTime / 6000 < 1
-                      ? "00"
-                      : `0${Math.floor(currentTime / 6000)}`}
-                    :{/* Current Time Seconds */}
-                    {(currentTime / 100) % 60 < 10
-                      ? `0${Math.floor((currentTime / 100) % 60)}`
-                      : Math.floor((currentTime / 100) % 60) || "00"}
-                  </span>
-                  <span id="full-time" className="whitespace-nowrap">
-                    {/* Duration Time Minutes */}
-                    {duration / 6000 < 1
-                      ? "00"
-                      : `0${Math.floor(duration / 6000)}`}
-                    :{/* Duration Time Seconds */}
-                    {(duration / 100) % 60 < 10
-                      ? `0${Math.floor((duration / 100) % 60)}`
-                      : Math.floor((duration / 100) % 60) || "00"}
-                  </span>
+                  <div className="flex flex-row items-center justify-between mt-2 text-xl">
+                    <span id="current-time" className="whitespace-nowrap">
+                      {/* Current Time Minutes */}
+                      {currentTime / 6000 < 1
+                        ? "00"
+                        : `0${Math.floor(currentTime / 6000)}`}
+                      :{/* Current Time Seconds */}
+                      {(currentTime / 100) % 60 < 10
+                        ? `0${Math.floor((currentTime / 100) % 60)}`
+                        : Math.floor((currentTime / 100) % 60) || "00"}
+                    </span>
+                    <span id="full-time" className="whitespace-nowrap">
+                      {/* Duration Time Minutes */}
+                      {duration / 6000 < 1
+                        ? "00"
+                        : `0${Math.floor(duration / 6000)}`}
+                      :{/* Duration Time Seconds */}
+                      {(duration / 100) % 60 < 10
+                        ? `0${Math.floor((duration / 100) % 60)}`
+                        : Math.floor((duration / 100) % 60) || "00"}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex flex-row items-center justify-center">
+                  <button
+                    onClick={() => {
+                      setLooping(!isLooping);
+                    }}
+                    className=""
+                  >
+                    {isLooping ? (
+                      <Repeat className="text-emerald-700" />
+                    ) : (
+                      <Repeat />
+                    )}
+                  </button>
+
+                  <button onClick={prevSong} className="ml-4">
+                    <SkipBack />
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setPlaying(!isPlaying);
+                      if (isPlaying) {
+                        music.pause();
+                      } else {
+                        music.play();
+                      }
+                    }}
+                    className="mx-4 rounded-full bg-emerald-700 hover:bg-emerald-500 transition-all p-4"
+                  >
+                    {isPlaying ? <Pause /> : <Play className="" />}
+                  </button>
+
+                  <button onClick={nextSong} className="mr-4">
+                    <SkipForward />
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      setShuffle(!isShuffle);
+                    }}
+                    className=""
+                  >
+                    {isShuffle ? (
+                      <Shuffle className="text-emerald-700" />
+                    ) : (
+                      <Shuffle />
+                    )}
+                  </button>
+                </div>
+
+                <div className="flex flex-row items-center space-x-2">
+                  <button
+                    onClick={() => {
+                      if (muted) {
+                        setVolume(muted);
+                        setMuted(0);
+                      } else {
+                        setMuted(volume);
+                        setVolume(0);
+                      }
+                    }}
+                  >
+                    {Vol({ volume })}
+                  </button>
+                  <input
+                    type="range"
+                    min={0}
+                    max={1000}
+                    value={volume * 1000}
+                    className="range-lg h-4 w-[200px] cursor-pointer appearance-none rounded-xl bg-gray-700"
+                    onChange={(e) => {
+                      music.volume = e.target.value / 1000;
+                    }}
+                  />
                 </div>
               </div>
-
-              <div className="flex flex-row items-center justify-center">
-                <button
-                  onClick={() => {
-                    setLooping(!isLooping);
-                  }}
-                  className=""
-                >
-                  {isLooping ? (
-                    <Repeat className="text-emerald-700" />
-                  ) : (
-                    <Repeat />
-                  )}
-                </button>
-
-                <button onClick={prevSong} className="ml-4">
-                  <SkipBack />
-                </button>
-
-                <button
-                  onClick={() => {
-                    setPlaying(!isPlaying);
-                    if (isPlaying) {
-                      music.pause();
-                    } else {
-                      music.play();
-                    }
-                  }}
-                  className="mx-4 rounded-full bg-emerald-700 hover:bg-emerald-500 transition-all p-4"
-                >
-                  {isPlaying ? <Pause /> : <Play className="" />}
-                </button>
-
-                <button onClick={nextSong} className="mr-4">
-                  <SkipForward />
-                </button>
-
-                <button
-                  onClick={() => {
-                    setShuffle(!isShuffle);
-                  }}
-                  className=""
-                >
-                  {isShuffle ? (
-                    <Shuffle className="text-emerald-700" />
-                  ) : (
-                    <Shuffle />
-                  )}
-                </button>
-              </div>
-
-              <div className="flex flex-row items-center space-x-2">
-                <button
-                  onClick={() => {
-                    if (muted) {
-                      setVolume(muted);
-                      setMuted(0);
-                    } else {
-                      setMuted(volume);
-                      setVolume(0);
-                    }
-                  }}
-                >
-                  {Vol({ volume })}
-                </button>
-                <input
-                  type="range"
-                  min={0}
-                  max={1000}
-                  value={volume * 1000}
-                  className="range-lg h-4 w-[200px] cursor-pointer appearance-none rounded-xl bg-gray-700"
-                  onChange={(e) => {
-                    music.volume = e.target.value / 1000;
-                  }}
-                />
-              </div>
-            </div>
-          )) || <p>Loading...</p>}
+            )) || <p>Loading...</p>}
+          </div>
         </div>
-        {/* <div className="overflow-scroll flex flex-col min-w-[50%] min-h-full items-center justify-start">
-          <div>playlist1</div>
-          <div>playlist2</div>
-          <div>playlist1</div>
-          <div>playlist2</div>
-          <div>playlist1</div>
-          <div>playlist2</div>
-          <div>playlist1</div>
-          <div>playlist2</div>
-          <div>playlist1</div>
-          <div>playlist2</div>
-          <div>playlist1</div>
-          <div>playlist2</div>
-          <div>playlist1</div>
-          <div>playlist2</div>
-          <div>playlist1</div>
-          <div>playlist2</div>
-        </div> */}
       </div>
-    </div>
+      <div className="flex flex-col bg-gray-800 w-full">{playlistData}</div>
+    </>
   );
 }
