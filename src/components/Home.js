@@ -68,6 +68,8 @@ export default function Home() {
 
   useEffect(() => setMounted(true), []);
 
+  // Playlist Data
+
   const playlistData = songdata.map((song, index) => {
     return (
       <div
@@ -104,8 +106,19 @@ export default function Home() {
         <Helmet>
           <title>SwiftSongs</title>
         </Helmet>
+        <p className="tablet:text-base text-sm sticky">
+          Created by{" "}
+          <a
+            href="https://pranjalg420.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500"
+          >
+            Pranjal Gupta
+          </a>
+        </p>
         <div className="flex flex-col min-h-screen">
-          <div className="m-auto flex flex-col justify-center items-center">
+          <div className="m-auto flex flex-col justify-center items-center border-2 rounded p-10">
             <audio
               src={songdata[currentlyPlaying].source}
               id="audio"
@@ -270,7 +283,9 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col bg-gray-800 w-full">{playlistData}</div>
+      <div className="flex flex-col bg-gradient-to-l from-gray-700 to-slate-800 w-full">
+        {playlistData}
+      </div>
     </>
   );
 }

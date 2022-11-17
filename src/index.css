@@ -12,13 +12,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
-  @apply bg-gray-900 text-slate-200 text-2xl tablet:text-3xl font-semibold;
+  @apply bg-gradient-to-b from-slate-800 to-slate-900 text-slate-200 text-2xl tablet:text-3xl font-semibold;
   /* transition: all 250ms; */
 }
 
-body.dark {
-  @apply bg-gradient-to-bl from-slate-800 to-slate-900 text-white;
-}
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
