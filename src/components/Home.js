@@ -111,13 +111,17 @@ export default function Home() {
           />
 
           {(isMounted && (
-            <div className="flex w-full flex-col items-center space-y-4 rounded-md border-4 border-slate-700 p-8 ">
-              <p>
-                Playing {parseInt(songdata[currentlyPlaying].id) + 1} of{" "}
-                {songdata.length}
-              </p>
+            <div className="flex w-full flex-col items-center space-y-4 rounded-md tablet:min-w-[400px] p-8 ">
+              <div className="flex flex-col items-center justify-around">
+                <p className="">
+                  Playing {parseInt(songdata[currentlyPlaying].id) + 1} of{" "}
+                  {songdata.length}
+                </p>
 
-              <p>{songdata[currentlyPlaying].name}</p>
+                <p className="lex justify-center">
+                  {songdata[currentlyPlaying].name}
+                </p>
+              </div>
 
               <div className="flex flex-col justify-center w-full">
                 <input
@@ -163,7 +167,7 @@ export default function Home() {
                   className=""
                 >
                   {isLooping ? (
-                    <Repeat className="text-blue-500" />
+                    <Repeat className="text-emerald-700" />
                   ) : (
                     <Repeat />
                   )}
@@ -182,7 +186,7 @@ export default function Home() {
                       music.play();
                     }
                   }}
-                  className="mx-4 rounded-full bg-emerald-600 p-4"
+                  className="mx-4 rounded-full bg-emerald-700 hover:bg-emerald-500 transition-all p-4"
                 >
                   {isPlaying ? <Pause /> : <Play className="" />}
                 </button>
@@ -198,7 +202,7 @@ export default function Home() {
                   className=""
                 >
                   {isShuffle ? (
-                    <Shuffle className="text-blue-500" />
+                    <Shuffle className="text-emerald-700" />
                   ) : (
                     <Shuffle />
                   )}
@@ -224,7 +228,7 @@ export default function Home() {
                   min={0}
                   max={1000}
                   value={volume * 1000}
-                  className="range-lg h-4 w-full cursor-pointer appearance-none rounded-xl bg-gray-700"
+                  className="range-lg h-4 w-[200px] cursor-pointer appearance-none rounded-xl bg-gray-700"
                   onChange={(e) => {
                     music.volume = e.target.value / 1000;
                   }}
