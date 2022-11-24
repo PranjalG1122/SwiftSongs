@@ -13,6 +13,7 @@ import {
   Volume1,
   Volume2,
   VolumeX,
+  ChevronDown,
 } from "react-feather";
 
 function Vol({ volume }) {
@@ -118,7 +119,7 @@ export default function Home() {
           </a>
         </p>
         <div className="flex flex-col min-h-screen">
-          <div className="m-auto flex flex-col justify-center items-center border-2 rounded p-10">
+          <div className="m-auto flex flex-col justify-center items-center rounded p-10">
             <audio
               src={songdata[currentlyPlaying].source}
               id="audio"
@@ -280,6 +281,10 @@ export default function Home() {
                 </div>
               </div>
             )) || <p>Loading...</p>}
+            <div className="flex flex-col items-center">
+              <p className="text-2xl">Playlist</p>
+              <ChevronDown></ChevronDown>
+            </div>
           </div>
         </div>
       </div>
