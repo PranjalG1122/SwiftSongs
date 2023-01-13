@@ -107,7 +107,7 @@ export default function Home() {
         <Helmet>
           <title>SwiftSongs</title>
         </Helmet>
-        <p className="tablet:text-base text-sm sticky">
+        <p className="tablet:text-base text-sm">
           Created by{" "}
           <a
             href="https://pranjalg420.vercel.app"
@@ -118,6 +118,9 @@ export default function Home() {
             Pranjal Gupta
           </a>
         </p>
+        <a href="/credits" className="text-blue-500 tablet:text-base text-sm">
+          Credits
+        </a>
         <div className="flex flex-col min-h-screen">
           <div className="m-auto flex flex-col justify-center items-center rounded p-10">
             <audio
