@@ -110,7 +110,7 @@ export default function Home() {
         <p className="tablet:text-base text-sm">
           Created by{" "}
           <a
-            href="https://pranjalg420.vercel.app"
+            href="https://pranjalg1122.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
             className="text-blue-500"
